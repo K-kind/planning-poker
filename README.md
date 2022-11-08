@@ -4,12 +4,6 @@
 
 - Node.js v18
 
-## Start Development
-
-Install dependencies with `--legacy-peer-deps` option. (To ignore @craco/craco dependency errors.)
-
-`npm i --legacy-peer-deps`
-
 ## Available Scripts
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
