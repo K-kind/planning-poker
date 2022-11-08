@@ -9,37 +9,12 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
-      players: {
-        Row: {
-          id: string;
-          room_id: string;
-          name: string;
-          number: number | null;
-          created_at: string;
-          updated_at: string;
-        };
-        Insert: {
-          id?: string;
-          room_id: string;
-          name: string;
-          number?: number | null;
-          created_at?: string;
-          updated_at?: string;
-        };
-        Update: {
-          id?: string;
-          room_id?: string;
-          name?: string;
-          number?: number | null;
-          created_at?: string;
-          updated_at?: string;
-        };
-      };
       rooms: {
         Row: {
           id: string;
           card_status: Database["public"]["Enums"]["card_status"];
           cards: number[];
+          players: Json;
           created_at: string;
           updated_at: string;
         };
@@ -47,6 +22,7 @@ export interface Database {
           id?: string;
           card_status?: Database["public"]["Enums"]["card_status"];
           cards?: number[];
+          players?: Json;
           created_at?: string;
           updated_at?: string;
         };
@@ -54,6 +30,7 @@ export interface Database {
           id?: string;
           card_status?: Database["public"]["Enums"]["card_status"];
           cards?: number[];
+          players?: Json;
           created_at?: string;
           updated_at?: string;
         };
