@@ -1,0 +1,40 @@
+import { useMutation } from "@tanstack/react-query";
+import { PlayerUpdateParams } from "@/features/rooms/types/player";
+import { updateRoom } from "@/features/rooms/api/updateRoom";
+import { Room } from "@/features/rooms/types/room";
+
+export type UpdatePlayerDTO = {
+  id: string;
+  room: Room;
+  data: PlayerUpdateParams;
+};
+
+export const updatePlayer = async ({ id, room, data }: UpdatePlayerDTO) => {
+  const player = room.players.find((p) => p.id === id);
+  if (player === undefined) throw new Error("Invalid player ID");
+
+  const updatedPlayer = { ...player, ...data };
+  const players = room.players
+    .map((p) => {
+      return p.id === id ? updatedPlayer : p;
+    })
+    .sort((a, b) => {
+      if (a.createdAt < b.createdAt) return -1;
+      if (a.createdAt > b.createdAt) return 1;
+      return 0;
+    });
+  await updateRoom({ id: room.id, data: { players } });
+  return updatedPlayer;
+};
+
+type Options = {
+  id: string;
+  room: Room;
+};
+
+export const useUpdatePlayer = ({ id, room }: Options) => {
+  return useMutation({
+    mutationFn: (data: UpdatePlayerDTO["data"]) =>
+      updatePlayer({ id, room, data }),
+  });
+};
