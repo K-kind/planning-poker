@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Button, Flex } from "@mantine/core";
 import { useCreateRoom } from "@/features/rooms/api/createRoom";
 
 export const NewRoom = () => {
@@ -17,8 +18,10 @@ export const NewRoom = () => {
   };
 
   return (
-    <div>
-      <button onClick={onClick}>部屋を作成する</button>
-    </div>
+    <Flex direction="column" align="center" pt={{ base: "xl", md: 32 }}>
+      <Button size="md" onClick={onClick}>
+        部屋を作成する
+      </Button>
+    </Flex>
   );
 };
