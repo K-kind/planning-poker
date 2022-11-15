@@ -28,7 +28,6 @@ export const useSubscribeRoom = ({
           filter: `id=eq.${id}`,
         },
         (payload) => {
-          console.log("Change received!", payload);
           const roomRow = payload.new as RoomRow;
           const room = parseRoom(roomRow);
           setUpdatedRoom(room);
@@ -43,8 +42,7 @@ export const useSubscribeRoom = ({
           table: "rooms",
           filter: `id=eq.${id}`,
         },
-        (payload) => {
-          console.log("Delete received!", payload);
+        () => {
           onDelete?.();
         }
       )

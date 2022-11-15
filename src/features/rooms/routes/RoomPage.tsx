@@ -12,7 +12,9 @@ export const RoomPage = () => {
   const roomQuery = useRoom({ id: roomId });
 
   const onRoomUpdate = useCallback(() => {}, []);
-  const onRoomDelete = useCallback(() => {}, []);
+  const onRoomDelete = useCallback(() => {
+    alert("部屋が削除されました。");
+  }, []);
   const { updatedRoom } = useSubscribeRoom({
     id: roomId,
     onUpdate: onRoomUpdate,
