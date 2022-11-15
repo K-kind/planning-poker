@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import { Flex } from "@mantine/core";
 import { useUpdatePlayer } from "@/features/rooms/api/updatePlayer";
 import { Player } from "@/features/rooms/types/player";
 import { Room } from "@/features/rooms/types/room";
@@ -29,33 +30,36 @@ export const RoomBoard = ({ room, player }: Props) => {
 
   const updatePlayerMutation = useUpdatePlayer({ id: player.id, room });
   const updateHand = useCallback(
-    (card: number | null) => {
-      updatePlayerMutation.mutate({ number: card });
+    (card: number) => {
+      const updatedNumber = card === player.number ? null : card;
+      updatePlayerMutation.mutate({ number: updatedNumber });
     },
-    [updatePlayerMutation]
+    [updatePlayerMutation, player]
   );
 
   return (
-    <div>
-      <div>
-        <RoomButtons
-          cardStatus={room.cardStatus}
-          loading={updateRoomMuation.isLoading}
-          onChangeStatus={toggleStatus}
-          onClickReset={resetHands}
-        />
-      </div>
-      <div>
-        <PlayerCards room={room} player={player} />
-      </div>
-      <div>
-        <Hands
-          cards={room.cards}
-          selectedCard={player.number}
-          loading={updatePlayerMutation.isLoading}
-          onSelect={updateHand}
-        />
-      </div>
-    </div>
+    <Flex direction="column" align="center" pt={{ base: "xl", md: 32 }}>
+      <RoomButtons
+        cardStatus={room.cardStatus}
+        loading={updateRoomMuation.isLoading}
+        sx={() => ({ marginBottom: 40 })}
+        onChangeStatus={toggleStatus}
+        onClickReset={resetHands}
+      />
+
+      <PlayerCards
+        room={room}
+        player={player}
+        sx={() => ({ marginBottom: 40 })}
+      />
+
+      <Hands
+        cards={room.cards}
+        selectedCard={player.number}
+        loading={updatePlayerMutation.isLoading}
+        sx={{ maxWidth: 700 }}
+        onSelect={updateHand}
+      />
+    </Flex>
   );
 };

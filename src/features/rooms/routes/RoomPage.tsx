@@ -32,20 +32,9 @@ export const RoomPage = () => {
   };
   const player = players.find((p) => p.id === playerId);
 
-  return (
-    <div>
-      <div>部屋</div>
-      <div style={{ whiteSpace: "pre" }}>
-        {JSON.stringify(room, undefined, 2)}
-      </div>
+  if (player === undefined) {
+    return <NewPlayer room={room} onSubmit={onCreatePlayer} />;
+  }
 
-      <div>
-        {player ? (
-          <RoomBoard room={room} player={player} />
-        ) : (
-          <NewPlayer room={room} onSubmit={onCreatePlayer} />
-        )}
-      </div>
-    </div>
-  );
+  return <RoomBoard room={room} player={player} />;
 };

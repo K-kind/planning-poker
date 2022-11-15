@@ -1,25 +1,35 @@
+import { Button, Flex, Sx, Text } from "@mantine/core";
+
 type Props = {
   cards: number[];
   selectedCard: number | null;
   loading?: boolean;
-  onSelect: (card: number | null) => void;
+  sx?: Sx;
+  onSelect: (card: number) => void;
 };
 
-export const Hands = ({ cards, selectedCard, loading, onSelect }: Props) => {
+export const Hands = ({
+  cards,
+  selectedCard,
+  loading,
+  sx,
+  onSelect,
+}: Props) => {
   return (
-    <div>
+    <Flex sx={sx} columnGap={16} rowGap={8} wrap="wrap">
       {cards.map((card) => (
-        <span
+        <Button
           key={card}
+          variant={selectedCard === card ? "filled" : "light"}
+          disabled={loading}
+          w={50}
+          h={70}
+          p={0}
           onClick={() => onSelect(card)}
-          style={{
-            color: selectedCard === card ? "red" : undefined,
-            opacity: loading ? 0.5 : undefined,
-          }}
         >
-          {card}
-        </span>
+          <Text fz="xl">{card}</Text>
+        </Button>
       ))}
-    </div>
+    </Flex>
   );
 };

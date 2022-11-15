@@ -1,9 +1,11 @@
+import { Button, Flex, Sx } from "@mantine/core";
+import { IconPlayCard, IconPlayCardOff, IconTrash } from "@tabler/icons";
 import { Room } from "@/features/rooms/types/room";
-import { Button, SegmentedControl } from "@mantine/core";
 
 type Props = {
   cardStatus: Room["cardStatus"];
   loading?: boolean;
+  sx?: Sx;
   onChangeStatus: (cardStatus: Room["cardStatus"]) => void;
   onClickReset: () => void;
 };
@@ -11,23 +13,60 @@ type Props = {
 export const RoomButtons = ({
   cardStatus,
   loading = false,
+  sx,
   onChangeStatus,
   onClickReset,
 }: Props) => {
   return (
-    <div>
-      <SegmentedControl
-        value={cardStatus}
-        onChange={onChangeStatus}
-        data={[
-          { label: "Open", value: "open" },
-          { label: "Hide", value: "hidden" },
-        ]}
+    <Flex columnGap={24} sx={sx}>
+      {cardStatus === "hidden" ? (
+        <Button
+          variant="light"
+          leftIcon={<IconPlayCard size={16} />}
+          w={150}
+          styles={() => ({
+            leftIcon: {
+              marginRight: 4,
+            },
+          })}
+          disabled={loading}
+          onClick={() => onChangeStatus("open")}
+        >
+          カードをめくる
+        </Button>
+      ) : (
+        <Button
+          variant="light"
+          color="gray"
+          leftIcon={<IconPlayCardOff size={16} />}
+          w={150}
+          styles={() => ({
+            leftIcon: {
+              marginRight: 4,
+            },
+          })}
+          disabled={loading}
+          onClick={() => onChangeStatus("hidden")}
+        >
+          カードを伏せる
+        </Button>
+      )}
+
+      <Button
+        variant="light"
+        color="red"
+        leftIcon={<IconTrash size={16} />}
+        w={108}
+        styles={() => ({
+          leftIcon: {
+            marginRight: 4,
+          },
+        })}
         disabled={loading}
-      />
-      <Button disabled={loading} onClick={onClickReset}>
+        onClick={onClickReset}
+      >
         リセット
       </Button>
-    </div>
+    </Flex>
   );
 };
