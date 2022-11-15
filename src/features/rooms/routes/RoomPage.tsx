@@ -1,13 +1,10 @@
+import { useCallback, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useRoom } from "@/features/rooms/api/getRoom";
 import { useSubscribeRoom } from "@/features/rooms/api/subscribeRoom";
 import { NewPlayer } from "@/features/rooms/components/NewPlayer";
 import { RoomBoard } from "@/features/rooms/components/RoomBoard";
-import {
-  getCurrentPlayerId,
-  setCurrentPlayerId,
-} from "@/features/rooms/models/player";
-import { useCallback, useState } from "react";
-import { useParams } from "react-router-dom";
+import { getStorageRoom, setStorageRoom } from "@/features/rooms/models/room";
 
 export const RoomPage = () => {
   const params = useParams();
@@ -25,10 +22,12 @@ export const RoomPage = () => {
   const room = updatedRoom ?? roomQuery.data!;
   const players = room.players;
 
-  const [playerId, setPlayerId] = useState(() => getCurrentPlayerId(roomId));
+  const [playerId, setPlayerId] = useState(
+    () => getStorageRoom(roomId)?.playerId
+  );
   const onCreatePlayer = (newPlayerId: string) => {
     setPlayerId(newPlayerId);
-    setCurrentPlayerId(roomId, newPlayerId);
+    setStorageRoom(room, newPlayerId);
   };
   const player = players.find((p) => p.id === playerId);
 

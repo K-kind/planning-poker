@@ -1,6 +1,5 @@
 import { Player, PlayerRow } from "@/features/rooms/types/player";
 import { RoomRow } from "@/features/rooms/types/room";
-import { getStorageItem, setStorageItem } from "@/lib/local-storage";
 
 export const parsePlayers = (rowPlayers: RoomRow["players"]): Player[] => {
   if (!Array.isArray(rowPlayers)) return [];
@@ -35,14 +34,4 @@ export const toPlayerRow = (player: Player): PlayerRow => {
     number: player.number,
     created_at: player.createdAt.toUTCString(),
   };
-};
-
-export const getCurrentPlayerId = (roomId: string) => {
-  const roomUserMap = getStorageItem("ROOM_USER");
-  return roomUserMap?.[roomId];
-};
-
-export const setCurrentPlayerId = (roomId: string, playerId: string) => {
-  const roomUserMap = getStorageItem("ROOM_USER") ?? {};
-  setStorageItem("ROOM_USER", { ...roomUserMap, [roomId]: playerId });
 };
