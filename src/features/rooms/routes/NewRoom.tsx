@@ -10,7 +10,7 @@ export const NewRoom = () => {
 
   const onClick = async () => {
     createRoomMutation.mutate(
-      {},
+      { name: "TMP" }, // TODO: get name input
       {
         onSuccess(room) {
           navigate(`/rooms/${room.id}`);

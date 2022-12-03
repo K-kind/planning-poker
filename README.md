@@ -44,4 +44,4 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ### generate types
 
-`npx supabase gen types typescript --linked > src/lib/generated-schema.ts`
+`npx supabase gen types typescript --linked > generated-schema.ts`

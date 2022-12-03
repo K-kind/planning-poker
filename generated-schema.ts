@@ -9,9 +9,27 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      room_users: {
+        Row: {
+          id: number;
+          room_id: string;
+          user_id: string;
+        };
+        Insert: {
+          id?: number;
+          room_id: string;
+          user_id: string;
+        };
+        Update: {
+          id?: number;
+          room_id?: string;
+          user_id?: string;
+        };
+      };
       rooms: {
         Row: {
           id: string;
+          name: string;
           card_status: Database["public"]["Enums"]["card_status"];
           cards: number[];
           players: Json;
@@ -20,6 +38,7 @@ export interface Database {
         };
         Insert: {
           id?: string;
+          name: string;
           card_status?: Database["public"]["Enums"]["card_status"];
           cards?: number[];
           players?: Json;
@@ -28,6 +47,7 @@ export interface Database {
         };
         Update: {
           id?: string;
+          name?: string;
           card_status?: Database["public"]["Enums"]["card_status"];
           cards?: number[];
           players?: Json;

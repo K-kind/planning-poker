@@ -12,6 +12,7 @@ import {
 export const parseRoom = (row: RoomRow): Room => {
   return {
     id: row.id,
+    name: row.name,
     cardStatus: row.card_status,
     cards: row.cards,
     players: parsePlayers(row.players),
