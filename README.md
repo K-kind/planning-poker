@@ -45,3 +45,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ### generate types
 
 `npx supabase gen types typescript --linked > generated-schema.ts`
+
+### deploy function
+
+`npx supabase functions deploy <function name>`
