@@ -12,6 +12,6 @@ export type Player = {
   createdAt: Date;
 };
 
-export type PlayerCreateParams = Pick<Player, "name"> & Partial<Player>;
+export type PlayerCreateParams = Pick<Player, "id" | "name"> & Partial<Player>;
 
 export type PlayerUpdateParams = Partial<Player>;

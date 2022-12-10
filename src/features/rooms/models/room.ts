@@ -1,4 +1,3 @@
-import { getStorageItem, setStorageItem } from "@/lib/localStorage";
 import { parsePlayers, toPlayerRow } from "@/features/rooms/models/player";
 import {
   Room,
@@ -35,20 +34,3 @@ export function toRoomRow(room: Partial<Room>): Partial<RoomRow> {
     updated_at: room.updatedAt?.toUTCString(),
   };
 }
-
-export const getStorageRoom = (roomId: string) => {
-  const rooms = getStorageItem("ROOMS");
-  return rooms?.[roomId];
-};
-
-export const setStorageRoom = (room: Room, playerId: string) => {
-  const rooms = getStorageItem("ROOMS") ?? {};
-  setStorageItem("ROOMS", {
-    ...rooms,
-    [room.id]: { playerId, createdAt: room.createdAt.toUTCString() },
-  });
-};
-
-export const getStorageRooms = () => {
-  return getStorageItem("ROOMS") ?? {};
-};

@@ -1,20 +1,21 @@
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { Button, Flex, TextInput } from "@mantine/core";
 import { showNotification } from "@mantine/notifications";
 import { Room } from "@/features/rooms/types/room";
 import { useCreatePlayer } from "@/features/rooms/api/createPlayer";
+import { AuthContext } from "@/providers/auth";
 
 type Props = {
   room: Room;
-  onSubmit: (playerId: string) => void;
 };
 
-export const NewPlayerForm = ({ room, onSubmit }: Props) => {
+export const NewPlayerForm = ({ room }: Props) => {
+  const { user } = useContext(AuthContext);
   const [name, setName] = useState("");
 
   const createPlayerMutation = useCreatePlayer({ room });
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (name === "") {
@@ -25,12 +26,7 @@ export const NewPlayerForm = ({ room, onSubmit }: Props) => {
       });
     }
 
-    try {
-      const player = await createPlayerMutation.mutateAsync({ name });
-      onSubmit(player.id);
-    } catch (e) {
-      console.error(e);
-    }
+    createPlayerMutation.mutateAsync({ id: user!.id, name });
   };
 
   return (

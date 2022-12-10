@@ -1,15 +1,16 @@
-import { useCallback, useState } from "react";
+import { useCallback, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { useRoom } from "@/features/rooms/api/getRoom";
 import { useSubscribeRoom } from "@/features/rooms/api/subscribeRoom";
 import { NewPlayerForm } from "@/features/rooms/components/NewPlayerForm";
 import { RoomBoard } from "@/features/rooms/components/RoomBoard";
-import { getStorageRoom, setStorageRoom } from "@/features/rooms/models/room";
+import { AuthContext } from "@/providers/auth";
 
 export const RoomPage = () => {
   const params = useParams();
   const roomId = params.id!;
   const roomQuery = useRoom({ id: roomId });
+  const { user } = useContext(AuthContext);
 
   const onRoomUpdate = useCallback(() => {}, []);
   const onRoomDelete = useCallback(() => {
@@ -23,18 +24,10 @@ export const RoomPage = () => {
 
   const room = updatedRoom ?? roomQuery.data!;
   const players = room.players;
-
-  const [playerId, setPlayerId] = useState(
-    () => getStorageRoom(roomId)?.playerId
-  );
-  const onCreatePlayer = (newPlayerId: string) => {
-    setPlayerId(newPlayerId);
-    setStorageRoom(room, newPlayerId);
-  };
-  const player = players.find((p) => p.id === playerId);
+  const player = players.find((p) => p.id === user!.id);
 
   if (player === undefined) {
-    return <NewPlayerForm room={room} onSubmit={onCreatePlayer} />;
+    return <NewPlayerForm room={room} />;
   }
 
   return <RoomBoard room={room} player={player} />;
