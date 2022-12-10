@@ -1,6 +1,7 @@
-import { Box, Flex, Sx, Text, useMantineTheme } from "@mantine/core";
+import { Flex, Sx, Text, useMantineTheme } from "@mantine/core";
 import { Player } from "@/features/rooms/types/player";
 import { Room } from "@/features/rooms/types/room";
+import { TwoSidedCard } from "@/features/rooms/components/TwoSidedCard";
 
 type Props = {
   room: Room;
@@ -16,22 +17,7 @@ export const PlayerCards = ({ room, player, sx }: Props) => {
     <Flex justify="space-around" columnGap={6} rowGap={8} wrap="wrap" sx={sx}>
       {room.players.map((p) => (
         <Flex key={p.id} direction="column" align="center" w={126}>
-          <Box
-            sx={() => ({
-              borderWidth: 1,
-              borderStyle: "solid",
-              borderColor: "gray",
-              borderRadius: 4,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            })}
-            bg={p.number === null || isOpen ? undefined : "rgba(0, 0, 0, .12)"}
-            w={50}
-            h={70}
-          >
-            <Text fz="xl">{isOpen ? p.number : null}</Text>
-          </Box>
+          <TwoSidedCard number={p.number} isOpen={isOpen} />
           <Text
             size="sm"
             mt={4}
