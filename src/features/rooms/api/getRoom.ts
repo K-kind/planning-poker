@@ -6,6 +6,7 @@ import { Room } from "@/features/rooms/types/room";
 import { AuthContext, ContextValue } from "@/providers/auth";
 import { anonSignUp } from "@/features/auth/api/anonSignUp";
 import { createRoomUser } from "@/features/roomUsers/api/createRoomUser";
+import { ExtractFnReturnType, QueryConfig } from "@/lib/reactQuery";
 
 export type getRoomDTO = {
   id: string;
@@ -28,16 +29,20 @@ const fetchOrCreateRoomUser = async ({ id, user }: getRoomDTO) => {
   await createRoomUser({ params: { roomId: id } });
 };
 
+type QueryFnType = typeof getRoom;
+
 type Options = {
   id: string;
+  config?: QueryConfig<QueryFnType>;
 };
 
-export const useRoom = ({ id }: Options) => {
+export const useRoom = ({ id, config }: Options) => {
   const { user } = useContext(AuthContext);
 
-  return useQuery({
+  return useQuery<ExtractFnReturnType<QueryFnType>>({
     queryKey: ["room", id],
     queryFn: () => getRoom({ id, user }),
     retry: false,
+    ...config,
   });
 };
