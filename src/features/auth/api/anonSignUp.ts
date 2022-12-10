@@ -1,10 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { signUp } from "@/features/auth/api/signUp";
 import { setStorageItem } from "@/lib/localStorage";
-import {
-  generateRandomEmail,
-  generateRandomPassword,
-} from "@/shared/utils/randomValues";
+import { uuid } from "@/shared/utils/uuid";
 
 export const anonSignUp = async () => {
   const email = generateRandomEmail();
@@ -13,6 +10,14 @@ export const anonSignUp = async () => {
 
   setStorageItem("AUTH", { email, password });
   return data;
+};
+
+export const generateRandomEmail = () => {
+  return `planning-poker-anon-${uuid()}@example.com`;
+};
+
+export const generateRandomPassword = () => {
+  return `${uuid()}${uuid()}`;
 };
 
 export const useAnonSignUp = () => {
