@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useRoom } from "@/features/rooms/api/getRoom";
 import { useSubscribeRoom } from "@/features/rooms/api/subscribeRoom";
-import { NewPlayer } from "@/features/rooms/components/NewPlayer";
+import { NewPlayerForm } from "@/features/rooms/components/NewPlayerForm";
 import { RoomBoard } from "@/features/rooms/components/RoomBoard";
 import { getStorageRoom, setStorageRoom } from "@/features/rooms/models/room";
 
@@ -34,7 +34,7 @@ export const RoomPage = () => {
   const player = players.find((p) => p.id === playerId);
 
   if (player === undefined) {
-    return <NewPlayer room={room} onSubmit={onCreatePlayer} />;
+    return <NewPlayerForm room={room} onSubmit={onCreatePlayer} />;
   }
 
   return <RoomBoard room={room} player={player} />;

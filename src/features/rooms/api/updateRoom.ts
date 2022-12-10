@@ -5,13 +5,13 @@ import { toRoomRow } from "@/features/rooms/models/room";
 
 export type UpdateRoomDTO = {
   id: string;
-  data: RoomUpdateParams;
+  params: RoomUpdateParams;
 };
 
-export const updateRoom = async ({ id, data }: UpdateRoomDTO) => {
+export const updateRoom = async ({ id, params }: UpdateRoomDTO) => {
   const { error } = await supabase
     .from("rooms")
-    .update(toRoomRow(data))
+    .update(toRoomRow(params))
     .eq("id", id);
   if (error) throw error;
 };
@@ -22,6 +22,6 @@ type Options = {
 
 export const useUpdateRoom = ({ id }: Options) => {
   return useMutation({
-    mutationFn: (data: UpdateRoomDTO["data"]) => updateRoom({ id, data }),
+    mutationFn: (params: UpdateRoomDTO["params"]) => updateRoom({ id, params }),
   });
 };

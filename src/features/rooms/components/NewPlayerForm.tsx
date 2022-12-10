@@ -9,7 +9,7 @@ type Props = {
   onSubmit: (playerId: string) => void;
 };
 
-export const NewPlayer = ({ room, onSubmit }: Props) => {
+export const NewPlayerForm = ({ room, onSubmit }: Props) => {
   const [name, setName] = useState("");
 
   const createPlayerMutation = useCreatePlayer({ room });
@@ -20,7 +20,7 @@ export const NewPlayer = ({ room, onSubmit }: Props) => {
     if (name === "") {
       return showNotification({
         title: "エラー",
-        message: "名前を入力してください。",
+        message: "プレイヤー名を入力してください。",
         color: "red",
       });
     }
@@ -38,12 +38,14 @@ export const NewPlayer = ({ room, onSubmit }: Props) => {
       <form onSubmit={handleSubmit}>
         <Flex direction="column" align="center">
           <TextInput
-            label="名前を入力してください"
+            label="プレイヤー名"
             value={name}
             mb="lg"
             onChange={(e) => setName(e.target.value)}
           />
-          <Button type="submit">送信</Button>
+          <Button type="submit" loading={createPlayerMutation.isLoading}>
+            送信
+          </Button>
         </Flex>
       </form>
     </Flex>

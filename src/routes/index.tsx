@@ -5,12 +5,15 @@ import { NewRoom } from "@/features/rooms/routes/NewRoom";
 import { RoomPage } from "@/features/rooms/routes/RoomPage";
 import { NotFound } from "@/routes/NotFound";
 import { MainLayout } from "@/shared/components/MainLayout";
+import { SetAuth } from "@/shared/components/SetAuth";
 
 const AppWithLayout = () => {
   return (
     <MainLayout>
       <Suspense fallback={<Loader />}>
-        <Outlet />
+        <SetAuth>
+          <Outlet />
+        </SetAuth>
       </Suspense>
     </MainLayout>
   );

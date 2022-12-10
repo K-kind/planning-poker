@@ -1,4 +1,4 @@
-import { getStorageItem, setStorageItem } from "@/lib/local-storage";
+import { getStorageItem, setStorageItem } from "@/lib/localStorage";
 import { parsePlayers, toPlayerRow } from "@/features/rooms/models/player";
 import {
   Room,
@@ -27,6 +27,7 @@ export function toRoomRow(room: RoomUpdateParams): RoomUpdateRow;
 export function toRoomRow(room: Partial<Room>): Partial<RoomRow> {
   return {
     id: room.id,
+    name: room.name,
     card_status: room.cardStatus,
     cards: room.cards,
     players: room.players?.map(toPlayerRow),
