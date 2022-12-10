@@ -29,7 +29,7 @@ export const RoomButtons = ({
               marginRight: 4,
             },
           })}
-          disabled={loading}
+          sx={{ pointerEvents: loading ? "none" : undefined }}
           onClick={() => onChangeStatus("open")}
         >
           カードをめくる
@@ -45,7 +45,7 @@ export const RoomButtons = ({
               marginRight: 4,
             },
           })}
-          disabled={loading}
+          sx={{ pointerEvents: loading ? "none" : undefined }}
           onClick={() => onChangeStatus("hidden")}
         >
           カードを伏せる
@@ -62,7 +62,7 @@ export const RoomButtons = ({
             marginRight: 4,
           },
         })}
-        disabled={loading}
+        sx={{ pointerEvents: loading ? "none" : undefined }}
         onClick={onClickReset}
       >
         リセット

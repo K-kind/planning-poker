@@ -21,7 +21,7 @@ export const Hands = ({
         <Button
           key={card}
           variant={selectedCard === card ? "filled" : "light"}
-          disabled={loading}
+          sx={{ pointerEvents: loading ? "none" : undefined }}
           w={50}
           h={70}
           p={0}
