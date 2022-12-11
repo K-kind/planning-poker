@@ -1,44 +1,39 @@
-import { FormEvent, useContext, useState } from "react";
+import { useContext } from "react";
 import { Button, Flex, TextInput } from "@mantine/core";
-import { showNotification } from "@mantine/notifications";
+import { useForm, zodResolver } from "@mantine/form";
 import { Room } from "@/features/rooms/types/room";
 import { useCreatePlayer } from "@/features/rooms/api/createPlayer";
 import { AuthContext } from "@/providers/auth";
+import { playerFormSchema } from "@/features/rooms/schemas/playerForm";
 
 type Props = {
   room: Room;
 };
 
+type FormValues = { name: string };
+
 export const NewPlayerForm = ({ room }: Props) => {
   const { user } = useContext(AuthContext);
-  const [name, setName] = useState("");
+  const form = useForm<FormValues>({
+    initialValues: { name: "" },
+    validate: zodResolver(playerFormSchema()),
+  });
 
   const createPlayerMutation = useCreatePlayer({ room });
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    if (name?.trim() === "") {
-      return showNotification({
-        title: "エラー",
-        message: "プレイヤー名を入力してください。",
-        color: "red",
-      });
-    }
-
+  const handleSubmit = ({ name }: FormValues) => {
     createPlayerMutation.mutateAsync({ id: user!.id, name });
   };
 
   return (
     <Flex direction="column" align="center" pt={{ base: "xl", md: 32 }}>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={form.onSubmit(handleSubmit)}>
         <Flex direction="column" align="center">
           <TextInput
             label="プレイヤー名"
-            value={name}
             mb="lg"
             required
-            onChange={(e) => setName(e.target.value)}
+            {...form.getInputProps("name")}
           />
           <Button type="submit" loading={createPlayerMutation.isLoading}>
             {room.name} に入室
