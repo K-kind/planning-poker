@@ -7,6 +7,7 @@ import { Hands } from "@/features/rooms/components/Hands";
 import { PlayerCards } from "@/features/rooms/components/PlayerCards";
 import { RoomButtons } from "@/features/rooms/components/RoomButtons";
 import { useUpdateRoom } from "@/features/rooms/api/updateRoom";
+import { RoomHeader } from "@/features/rooms/components/RoomHeader";
 
 type Props = {
   room: Room;
@@ -38,7 +39,9 @@ export const RoomBoard = ({ room, player }: Props) => {
   );
 
   return (
-    <Flex direction="column" align="center" pt={{ base: "xl", md: 32 }}>
+    <Flex direction="column" align="center" pt={{ base: "xl" }}>
+      <RoomHeader room={room} sx={{ marginBottom: 40, width: "100%" }} />
+
       <RoomButtons
         cardStatus={room.cardStatus}
         loading={updateRoomMuation.isLoading}

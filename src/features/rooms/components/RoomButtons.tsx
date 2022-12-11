@@ -23,7 +23,7 @@ export const RoomButtons = ({
         <Button
           variant="light"
           leftIcon={<IconPlayCard size={16} />}
-          w={150}
+          w={120}
           styles={() => ({
             leftIcon: {
               marginRight: 4,
@@ -32,14 +32,14 @@ export const RoomButtons = ({
           sx={{ pointerEvents: loading ? "none" : undefined }}
           onClick={() => onChangeStatus("open")}
         >
-          カードをめくる
+          すべて開く
         </Button>
       ) : (
         <Button
           variant="light"
           color="gray"
           leftIcon={<IconPlayCardOff size={16} />}
-          w={150}
+          w={120}
           styles={() => ({
             leftIcon: {
               marginRight: 4,
@@ -48,7 +48,7 @@ export const RoomButtons = ({
           sx={{ pointerEvents: loading ? "none" : undefined }}
           onClick={() => onChangeStatus("hidden")}
         >
-          カードを伏せる
+          伏せる
         </Button>
       )}
 
@@ -56,7 +56,7 @@ export const RoomButtons = ({
         variant="light"
         color="red"
         leftIcon={<IconTrash size={16} />}
-        w={108}
+        w={120}
         styles={() => ({
           leftIcon: {
             marginRight: 4,
