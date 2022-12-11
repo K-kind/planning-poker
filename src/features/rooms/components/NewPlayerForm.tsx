@@ -18,7 +18,7 @@ export const NewPlayerForm = ({ room }: Props) => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (name === "") {
+    if (name?.trim() === "") {
       return showNotification({
         title: "エラー",
         message: "プレイヤー名を入力してください。",
@@ -37,10 +37,11 @@ export const NewPlayerForm = ({ room }: Props) => {
             label="プレイヤー名"
             value={name}
             mb="lg"
+            required
             onChange={(e) => setName(e.target.value)}
           />
           <Button type="submit" loading={createPlayerMutation.isLoading}>
-            送信
+            {room.name} に入室
           </Button>
         </Flex>
       </form>

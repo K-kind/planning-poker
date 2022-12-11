@@ -20,7 +20,7 @@ export const NewRoomForm = ({ onSubmit }: Props) => {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (name === "") {
+    if (name?.trim() === "") {
       return showNotification({
         title: "エラー",
         message: "部屋名を入力してください。",
@@ -45,6 +45,7 @@ export const NewRoomForm = ({ onSubmit }: Props) => {
             label="部屋名"
             value={name}
             mb="lg"
+            required
             onChange={(e) => setName(e.target.value)}
           />
           <Button
