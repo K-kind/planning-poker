@@ -24,7 +24,7 @@ export const RoomPage = () => {
 
   const room = updatedRoom ?? roomQuery.data!;
   const players = room.players;
-  const player = players.find((p) => p.id === user!.id);
+  const player = players.find((p) => p.id === user?.id);
 
   if (player === undefined) {
     return <NewPlayerForm room={room} />;

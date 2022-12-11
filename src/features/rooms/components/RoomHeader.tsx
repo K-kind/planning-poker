@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import { Button, Flex, Sx, Text, Tooltip } from "@mantine/core";
 import { useClipboard } from "@mantine/hooks";
 import { IconCopy, IconSettings } from "@tabler/icons";
@@ -6,10 +5,11 @@ import { Room } from "@/features/rooms/types/room";
 
 type Props = {
   room: Room;
+  openDrawer: () => void;
   sx?: Sx;
 };
 
-export const RoomHeader = ({ room, sx }: Props) => {
+export const RoomHeader = ({ room, openDrawer, sx }: Props) => {
   const clipboard = useClipboard({ timeout: 500 });
   const onClickCopy = () => {
     clipboard.copy(window.location.href);
@@ -29,14 +29,13 @@ export const RoomHeader = ({ room, sx }: Props) => {
             <IconCopy />
           </Button>
         </Tooltip>
-        <Tooltip label="設定" withArrow>
+        <Tooltip label="ルーム設定" withArrow>
           <Button
-            component={Link}
-            to={`/rooms/${room.id}/settings`}
             variant="subtle"
             size="xs"
             ml="sm"
             color="gray"
+            onClick={openDrawer}
           >
             <IconSettings />
           </Button>

@@ -1,4 +1,4 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { Flex } from "@mantine/core";
 import { useUpdatePlayer } from "@/features/rooms/api/updatePlayer";
 import { Player } from "@/features/rooms/types/player";
@@ -8,6 +8,7 @@ import { PlayerCards } from "@/features/rooms/components/PlayerCards";
 import { RoomButtons } from "@/features/rooms/components/RoomButtons";
 import { useUpdateRoom } from "@/features/rooms/api/updateRoom";
 import { RoomHeader } from "@/features/rooms/components/RoomHeader";
+import { RoomSettingsDrawer } from "@/features/rooms/components/RoomSettingsDrawer";
 
 type Props = {
   room: Room;
@@ -15,6 +16,10 @@ type Props = {
 };
 
 export const RoomBoard = ({ room, player }: Props) => {
+  const [drawerOpened, setDrawerOpened] = useState(false);
+  const openDrawer = useCallback(() => setDrawerOpened(true), []);
+  const closeDrawer = useCallback(() => setDrawerOpened(false), []);
+
   const updateRoomMuation = useUpdateRoom({ id: room.id });
   const toggleStatus = useCallback(
     (status: Room["cardStatus"]) => {
@@ -40,7 +45,17 @@ export const RoomBoard = ({ room, player }: Props) => {
 
   return (
     <Flex direction="column" align="center" pt={{ base: "xl" }}>
-      <RoomHeader room={room} sx={{ marginBottom: 40, width: "100%" }} />
+      <RoomHeader
+        room={room}
+        openDrawer={openDrawer}
+        sx={{ marginBottom: 40, width: "100%" }}
+      />
+
+      <RoomSettingsDrawer
+        room={room}
+        opened={drawerOpened}
+        closeDrawer={closeDrawer}
+      />
 
       <RoomButtons
         cardStatus={room.cardStatus}

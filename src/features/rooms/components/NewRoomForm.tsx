@@ -17,7 +17,7 @@ export const NewRoomForm = ({ onSubmit }: Props) => {
   const { user } = useContext(AuthContext);
   const form = useForm<FormValues>({
     initialValues: { name: "" },
-    validate: zodResolver(roomFormSchema()),
+    validate: zodResolver(roomFormSchema().pick({ name: true })),
   });
 
   const createRoomMutation = useCreateRoom();

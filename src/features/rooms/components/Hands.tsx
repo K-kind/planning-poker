@@ -17,9 +17,9 @@ export const Hands = ({
 }: Props) => {
   return (
     <Flex sx={sx} columnGap={16} rowGap={8} wrap="wrap">
-      {cards.map((card) => (
+      {cards.map((card, index) => (
         <Button
-          key={card}
+          key={`${card}.${index}`}
           variant={selectedCard === card ? "filled" : "light"}
           sx={{ pointerEvents: loading ? "none" : undefined }}
           w={50}
