@@ -1,6 +1,7 @@
 import { ReactNode, Suspense } from "react";
 import { MantineProvider } from "@mantine/core";
 import { NotificationsProvider } from "@mantine/notifications";
+import { ModalsProvider } from "@mantine/modals";
 import { BrowserRouter } from "react-router-dom";
 import { AppErrorBoundary } from "@/providers/errorBoundary";
 import { AppQueryClientProvider } from "@/providers/queryClient";
@@ -16,11 +17,13 @@ export const AppProvider = ({ children }: Props) => {
       <Suspense fallback={<p>Loading...</p>}>
         <MantineProvider withGlobalStyles withNormalizeCSS>
           <NotificationsProvider position="top-right">
-            <AppQueryClientProvider>
-              <AuthProvider>
-                <BrowserRouter>{children}</BrowserRouter>
-              </AuthProvider>
-            </AppQueryClientProvider>
+            <ModalsProvider>
+              <AppQueryClientProvider>
+                <AuthProvider>
+                  <BrowserRouter>{children}</BrowserRouter>
+                </AuthProvider>
+              </AppQueryClientProvider>
+            </ModalsProvider>
           </NotificationsProvider>
         </MantineProvider>
       </Suspense>

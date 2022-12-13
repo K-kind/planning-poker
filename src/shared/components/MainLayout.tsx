@@ -18,9 +18,9 @@ export const MainLayout = ({ children }: Props) => {
   return (
     <AppShell
       header={
-        <Header height={{ base: 40, md: 55 }} px="md">
+        <Header height={{ base: 40, xs: 55 }} px="md">
           <Container>
-            <Flex align="center" h={{ base: 40, md: 55 }}>
+            <Flex align="center" h={{ base: 40, xs: 55 }}>
               <Link to="/" style={{ textDecoration: "none" }}>
                 <Title size="h3" c={theme.primaryColor}>
                   Planning Poker

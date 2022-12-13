@@ -54,6 +54,7 @@ export const RoomBoard = ({ room, player }: Props) => {
       <RoomSettingsDrawer
         room={room}
         opened={drawerOpened}
+        player={player}
         closeDrawer={closeDrawer}
       />
 
