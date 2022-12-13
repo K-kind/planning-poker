@@ -1,16 +1,16 @@
 import { Suspense } from "react";
 import { Outlet, Route, Routes } from "react-router-dom";
-import { Loader } from "@mantine/core";
 import { NewRoom } from "@/features/rooms/routes/NewRoom";
 import { RoomPage } from "@/features/rooms/routes/RoomPage";
 import { NotFound } from "@/routes/NotFound";
 import { MainLayout } from "@/shared/components/MainLayout";
 import { SetAuth } from "@/shared/components/SetAuth";
+import { PageLoader } from "@/shared/components/PageLoader";
 
 const AppWithLayout = () => {
   return (
     <MainLayout>
-      <Suspense fallback={<Loader />}>
+      <Suspense fallback={<PageLoader />}>
         <SetAuth>
           <Outlet />
         </SetAuth>

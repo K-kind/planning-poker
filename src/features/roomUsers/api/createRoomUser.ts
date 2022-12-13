@@ -5,6 +5,7 @@ export type CreateRoomUserDTO = {
   params: { roomId: string };
 };
 
+/** create or load RoomUser */
 export const createRoomUser = async ({ params }: CreateRoomUserDTO) => {
   const body: CreateRoomUser["requestBody"] = { room_id: params.roomId };
   const { data, error } = await supabase.functions.invoke<

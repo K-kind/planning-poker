@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AppErrorBoundary } from "@/providers/errorBoundary";
 import { AppQueryClientProvider } from "@/providers/queryClient";
 import { AuthProvider } from "@/providers/auth";
+import { PageLoader } from "@/shared/components/PageLoader";
 
 type Props = {
   children: ReactNode;
@@ -14,7 +15,7 @@ type Props = {
 export const AppProvider = ({ children }: Props) => {
   return (
     <AppErrorBoundary>
-      <Suspense fallback={<p>Loading...</p>}>
+      <Suspense fallback={<PageLoader />}>
         <MantineProvider withGlobalStyles withNormalizeCSS>
           <NotificationsProvider position="top-right">
             <ModalsProvider>

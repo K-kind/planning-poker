@@ -1,32 +1,23 @@
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 import { parseRoom } from "@/features/rooms/models/room";
 import { Room } from "@/features/rooms/types/room";
-import { AuthContext, ContextValue } from "@/providers/auth";
-import { anonSignUp } from "@/features/auth/api/anonSignUp";
+import { AuthContext } from "@/providers/auth";
+import { useAnonSignUp } from "@/features/auth/api/anonSignUp";
 import { createRoomUser } from "@/features/roomUsers/api/createRoomUser";
 import { ExtractFnReturnType, QueryConfig } from "@/lib/reactQuery";
 
 export type getRoomDTO = {
   id: string;
-  user: ContextValue["user"];
 };
 
-export const getRoom = async ({ id, user }: getRoomDTO): Promise<Room> => {
-  // RoomUser is required to access Room data.
-  await fetchOrCreateRoomUser({ id, user });
-
+export const getRoom = async ({ id }: getRoomDTO): Promise<Room> => {
   const { data, error } = await supabase.from("rooms").select("*").eq("id", id);
   if (error) throw error;
   if (data.length === 0) throw new Error("Invalid roomId");
 
   return parseRoom(data[0]);
-};
-
-const fetchOrCreateRoomUser = async ({ id, user }: getRoomDTO) => {
-  if (user == null) await anonSignUp();
-  await createRoomUser({ params: { roomId: id } });
 };
 
 type QueryFnType = typeof getRoom;
@@ -38,10 +29,19 @@ type Options = {
 
 export const useRoom = ({ id, config }: Options) => {
   const { user } = useContext(AuthContext);
+  const anonSignUpMutation = useAnonSignUp();
+
+  const queryFn = useCallback(async () => {
+    // RoomUser is required to access Room data.
+    if (user == null) await anonSignUpMutation.mutateAsync();
+    await createRoomUser({ params: { roomId: id } });
+
+    return await getRoom({ id });
+  }, [user, id, anonSignUpMutation]);
 
   return useQuery<ExtractFnReturnType<QueryFnType>>({
     queryKey: ["room", id],
-    queryFn: () => getRoom({ id, user }),
+    queryFn,
     retry: false,
     ...config,
   });
