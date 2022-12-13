@@ -16,13 +16,13 @@ export const NewPlayerForm = ({ room }: Props) => {
   const { user } = useContext(AuthContext);
   const form = useForm<FormValues>({
     initialValues: { name: "" },
-    validate: zodResolver(playerFormSchema()),
+    validate: zodResolver(playerFormSchema().pick({ name: true })),
   });
 
   const createPlayerMutation = useCreatePlayer({ room });
 
   const handleSubmit = ({ name }: FormValues) => {
-    createPlayerMutation.mutateAsync({ id: user!.id, name });
+    createPlayerMutation.mutate({ id: user!.id, name });
   };
 
   return (
@@ -35,7 +35,11 @@ export const NewPlayerForm = ({ room }: Props) => {
             required
             {...form.getInputProps("name")}
           />
-          <Button type="submit" loading={createPlayerMutation.isLoading}>
+          <Button
+            type="submit"
+            loading={createPlayerMutation.isLoading}
+            loaderPosition="center"
+          >
             {room.name} に入室
           </Button>
         </Flex>

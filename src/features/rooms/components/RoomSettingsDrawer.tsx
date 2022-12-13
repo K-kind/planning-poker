@@ -114,7 +114,11 @@ export const RoomSettingsDrawer = ({
           {...form.getInputProps("cards")}
         />
         <Flex justify="center" align="center">
-          <Button type="submit" loading={updateRoomMuation.isLoading}>
+          <Button
+            type="submit"
+            loading={updateRoomMuation.isLoading}
+            loaderPosition="center"
+          >
             保存する
           </Button>
         </Flex>
