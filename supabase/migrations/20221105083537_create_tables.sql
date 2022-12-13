@@ -45,6 +45,14 @@ create policy "Allow update access" on public.rooms
     )
   );
 
+create policy "Allow delete access" on public.rooms
+  for delete to authenticated using (
+    auth.uid() in (
+      select user_id from room_users
+      where room_id = rooms.id
+    )
+  );
+
 
 -- Only allow realtime listening on public tables.
 drop publication if exists supabase_realtime;
