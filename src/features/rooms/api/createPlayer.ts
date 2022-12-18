@@ -15,6 +15,7 @@ export const createPlayer = async ({ room, params }: createPlayerDTO) => {
     name: params.name,
     number: params.number ?? null,
     createdAt: params.createdAt ?? new Date(),
+    lastAccessedAt: params.lastAccessedAt ?? new Date(),
   };
   const players = [...room.players, newPlayer].sort((a, b) => {
     if (a.createdAt < b.createdAt) return -1;

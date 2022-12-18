@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { PlayerUpdateParams } from "@/features/rooms/types/player";
+import { Player, PlayerUpdateParams } from "@/features/rooms/types/player";
 import { updateRoom } from "@/features/rooms/api/updateRoom";
 import { Room } from "@/features/rooms/types/room";
 
@@ -13,7 +13,11 @@ export const updatePlayer = async ({ id, room, params }: UpdatePlayerDTO) => {
   const player = room.players.find((p) => p.id === id);
   if (player === undefined) throw new Error("Invalid player ID");
 
-  const updatedPlayer = { ...player, ...params };
+  const updatedPlayer: Player = {
+    ...player,
+    lastAccessedAt: new Date(),
+    ...params,
+  };
   const players = room.players
     .map((p) => {
       return p.id === id ? updatedPlayer : p;

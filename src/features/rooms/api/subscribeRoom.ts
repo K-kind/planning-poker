@@ -1,21 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { parseRoom } from "@/features/rooms/models/room";
 import { Room, RoomRow } from "@/features/rooms/types/room";
 
 type UseSubscribeRoomOptions = {
   id: string;
+  onConnected?: () => void;
+  onError?: (error: Error | undefined) => void;
   onUpdate?: (room: Room) => void;
   onDelete?: () => void;
 };
 
 export const useSubscribeRoom = ({
   id,
+  onConnected,
+  onError,
   onUpdate,
   onDelete,
 }: UseSubscribeRoomOptions) => {
-  const [updatedRoom, setUpdatedRoom] = useState<Room | null>(null);
-
   useEffect(() => {
     const channel = supabase
       .channel(`public:rooms:id=eq.${id}`)
@@ -30,7 +32,6 @@ export const useSubscribeRoom = ({
         (payload) => {
           const roomRow = payload.new as RoomRow;
           const room = parseRoom(roomRow);
-          setUpdatedRoom(room);
           onUpdate?.(room);
         }
       )
@@ -46,12 +47,25 @@ export const useSubscribeRoom = ({
           onDelete?.();
         }
       )
-      .subscribe();
+      .subscribe((status, err) => {
+        if (status === "SUBSCRIBED") {
+          onConnected?.();
+        }
+
+        if (status === "CHANNEL_ERROR") {
+          console.error(
+            `There was an error subscribing to channel: ${err?.message}`
+          );
+          onError?.(err);
+        }
+
+        if (status === "TIMED_OUT") {
+          console.error("Realtime server did not respond in time.");
+        }
+      });
 
     return () => {
       supabase.removeChannel(channel);
     };
-  }, [id, onUpdate, onDelete]);
-
-  return { updatedRoom };
+  }, [id, onConnected, onError, onUpdate, onDelete]);
 };

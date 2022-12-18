@@ -3,6 +3,7 @@ export type PlayerRow = {
   name: string;
   number: number | null;
   created_at: string;
+  last_accessed_at: string;
 };
 
 export type Player = {
@@ -10,6 +11,7 @@ export type Player = {
   name: PlayerRow["name"];
   number: PlayerRow["number"];
   createdAt: Date;
+  lastAccessedAt: Date;
 };
 
 export type PlayerCreateParams = Pick<Player, "id" | "name"> & Partial<Player>;

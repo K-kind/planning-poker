@@ -1,5 +1,6 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Flex } from "@mantine/core";
+import { useQueryClient } from "@tanstack/react-query";
 import { useUpdatePlayer } from "@/features/rooms/api/updatePlayer";
 import { Player } from "@/features/rooms/types/player";
 import { Room } from "@/features/rooms/types/room";
@@ -42,6 +43,22 @@ export const RoomBoard = ({ room, player }: Props) => {
     },
     [updatePlayerMutation, player]
   );
+
+  const queryClient = useQueryClient();
+
+  // update my lastAccessedAt value on the first render
+  useEffect(() => {
+    updatePlayerMutation.mutate(
+      { lastAccessedAt: new Date() },
+      {
+        onSuccess: () => {
+          // refech room because subscription may not be ready to catch this change
+          queryClient.invalidateQueries({ queryKey: ["room", room.id] });
+        },
+      }
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <Flex direction="column" align="center" pt={{ base: "xl" }}>
