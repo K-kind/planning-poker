@@ -18,8 +18,6 @@ type Props = {
 
 export const RoomBoard = ({ room, player }: Props) => {
   const [drawerOpened, setDrawerOpened] = useState(false);
-  const openDrawer = useCallback(() => setDrawerOpened(true), []);
-  const closeDrawer = useCallback(() => setDrawerOpened(false), []);
 
   const updateRoomMuation = useUpdateRoom({ id: room.id });
   const toggleStatus = useCallback(
@@ -64,7 +62,7 @@ export const RoomBoard = ({ room, player }: Props) => {
     <Flex direction="column" align="center" pt={{ base: "xl" }}>
       <RoomHeader
         room={room}
-        openDrawer={openDrawer}
+        openDrawer={() => setDrawerOpened(true)}
         sx={{ marginBottom: 40, width: "100%" }}
       />
 
@@ -72,7 +70,7 @@ export const RoomBoard = ({ room, player }: Props) => {
         room={room}
         opened={drawerOpened}
         player={player}
-        closeDrawer={closeDrawer}
+        closeDrawer={() => setDrawerOpened(false)}
       />
 
       <RoomButtons
