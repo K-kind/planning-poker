@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Flex } from "@mantine/core";
 import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 import { useUpdatePlayer } from "@/features/rooms/api/updatePlayer";
 import { Player } from "@/features/rooms/types/player";
 import { Room } from "@/features/rooms/types/room";
@@ -10,6 +11,7 @@ import { RoomButtons } from "@/features/rooms/components/RoomButtons";
 import { useUpdateRoom } from "@/features/rooms/api/updateRoom";
 import { RoomHeader } from "@/features/rooms/components/RoomHeader";
 import { RoomSettingsDrawer } from "@/features/rooms/components/RoomSettingsDrawer";
+import { isActive } from "@/features/rooms/models/player";
 
 type Props = {
   room: Room;
@@ -43,7 +45,6 @@ export const RoomBoard = ({ room, player }: Props) => {
   );
 
   const queryClient = useQueryClient();
-
   // update my lastAccessedAt value on the first render
   useEffect(() => {
     updatePlayerMutation.mutate(
@@ -57,6 +58,16 @@ export const RoomBoard = ({ room, player }: Props) => {
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const navigate = useNavigate();
+  // refresh page on window focus if stale
+  useEffect(() => {
+    const focusListener = () => {
+      if (!isActive(player)) navigate(0);
+    };
+    window.addEventListener("focus", focusListener);
+    return () => window.removeEventListener("focus", focusListener);
+  }, [player, navigate]);
 
   return (
     <Flex direction="column" align="center" pt={{ base: "xl" }}>
