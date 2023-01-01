@@ -1,4 +1,4 @@
-# Planning Poker
+# Simple Planning Poker
 
 ## Development Dependencies
 

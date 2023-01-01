@@ -23,7 +23,7 @@ export const MainLayout = ({ children }: Props) => {
             <Flex align="center" h={{ base: 40, xs: 55 }}>
               <Link to="/" style={{ textDecoration: "none" }}>
                 <Title size="h3" c={theme.primaryColor}>
-                  Planning Poker
+                  Simple Planning Poker
                 </Title>
               </Link>
             </Flex>
