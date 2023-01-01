@@ -1,35 +1,22 @@
 import { ReactNode } from "react";
-import {
-  AppShell,
-  Container,
-  Flex,
-  Header,
-  Title,
-  useMantineTheme,
-} from "@mantine/core";
-import { Link } from "react-router-dom";
+import { AppShell, Container } from "@mantine/core";
+import { AppHeader } from "@/shared/components/AppHeader";
+import { AppFooter } from "@/shared/components/AppFooter";
 
 type Props = {
   children: ReactNode;
 };
 
 export const MainLayout = ({ children }: Props) => {
-  const theme = useMantineTheme();
   return (
     <AppShell
-      header={
-        <Header height={{ base: 40, xs: 55 }} px="md">
-          <Container>
-            <Flex align="center" h={{ base: 40, xs: 55 }}>
-              <Link to="/" style={{ textDecoration: "none" }}>
-                <Title size="h3" c={theme.primaryColor}>
-                  Simple Planning Poker
-                </Title>
-              </Link>
-            </Flex>
-          </Container>
-        </Header>
-      }
+      header={<AppHeader />}
+      footer={<AppFooter />}
+      fixed={false}
+      styles={{
+        root: { minHeight: "100vh", display: "flex", flexDirection: "column" },
+        body: { flex: 1 },
+      }}
     >
       <Container>{children}</Container>
     </AppShell>
