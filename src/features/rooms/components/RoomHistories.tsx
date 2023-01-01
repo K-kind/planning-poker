@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Box, Table, Text } from "@mantine/core";
 import { useRooms } from "@/features/rooms/api/getRooms";
 import { AuthContext } from "@/providers/auth";
+import { formatYMD } from "@/shared/utils/date";
 
 export const RoomHistories = () => {
   const { user } = useContext(AuthContext);
@@ -13,7 +14,7 @@ export const RoomHistories = () => {
       id: room.id,
       name: room.name,
       path: `/rooms/${room.id}`,
-      createdAt: new Date(room.createdAt).toLocaleDateString(),
+      createdAt: formatYMD(room.createdAt, "ja"),
     }));
   }, [roomsQuery.data]);
 

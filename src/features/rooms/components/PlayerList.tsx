@@ -7,6 +7,8 @@ import { useNotification } from "@/shared/hooks/useNotification";
 import { useModal } from "@/shared/hooks/useModal";
 import { Player } from "@/features/rooms/types/player";
 import { useDeletePlayer } from "@/features/rooms/api/deletePlayer";
+import { isActive } from "@/features/rooms/models/player";
+import { formatYMDMH } from "@/shared/utils/date";
 
 type Props = {
   room: Room;
@@ -55,14 +57,17 @@ export const PlayerList = ({ room, me }: Props) => {
                 <Text
                   onMouseEnter={() => setPoptargetPlayerId(player.id)}
                   onMouseLeave={() => setPoptargetPlayerId(undefined)}
-                  sx={{ flexGrow: 1 }}
+                  sx={(theme) => ({
+                    flexGrow: 1,
+                    color: isActive(player) ? undefined : theme.colors.dark[0],
+                  })}
                 >
                   {player.name}
                 </Text>
               </Popover.Target>
               <Popover.Dropdown sx={{ pointerEvents: "none" }}>
                 <Text size="sm">
-                  最終アクセス: {player.lastAccessedAt.toLocaleString()}
+                  最終アクセス: {formatYMDMH(player.lastAccessedAt, "ja")}
                 </Text>
               </Popover.Dropdown>
             </Popover>
