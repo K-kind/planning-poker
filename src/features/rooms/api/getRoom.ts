@@ -1,10 +1,8 @@
-import { useCallback, useContext } from "react";
+import { useCallback } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 import { parseRoom } from "@/features/rooms/models/room";
 import { Room } from "@/features/rooms/types/room";
-import { AuthContext } from "@/providers/auth";
-import { useAnonSignUp } from "@/features/auth/api/anonSignUp";
 import { createRoomUser } from "@/features/roomUsers/api/createRoomUser";
 import { ExtractFnReturnType, QueryConfig } from "@/lib/reactQuery";
 
@@ -28,16 +26,12 @@ type Options = {
 };
 
 export const useRoom = ({ id, config }: Options) => {
-  const { user } = useContext(AuthContext);
-  const anonSignUpMutation = useAnonSignUp();
-
   const queryFn = useCallback(async () => {
     // RoomUser is required to access Room data.
-    if (user == null) await anonSignUpMutation.mutateAsync();
     await createRoomUser({ params: { roomId: id } });
 
     return await getRoom({ id });
-  }, [user, id, anonSignUpMutation]);
+  }, [id]);
 
   return useQuery<ExtractFnReturnType<QueryFnType>>({
     queryKey: ["room", id],

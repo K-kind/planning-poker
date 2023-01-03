@@ -6,9 +6,13 @@ import { useSubscribeRoom } from "@/features/rooms/api/subscribeRoom";
 import { NewPlayerBoard } from "@/features/rooms/components/NewPlayerBoard";
 import { RoomBoard } from "@/features/rooms/components/RoomBoard";
 import { AuthContext } from "@/providers/auth";
+import { useEnsureSignIn } from "@/features/auth/api/ensureSignIn";
 
 export const RoomPage = () => {
   const params = useParams();
+
+  useEnsureSignIn();
+
   const roomId = params.id!;
   const roomQuery = useRoom({ id: roomId });
   const { user } = useContext(AuthContext);

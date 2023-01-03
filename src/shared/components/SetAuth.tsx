@@ -8,14 +8,22 @@ type Props = {
   children: ReactNode;
 };
 
+/**
+ * Set context user initialy.
+ * NOTE: Do not perform anonSignUp here to prevent signups by crawlers.
+ */
 export const SetAuth = ({ children }: Props) => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser, authError, setAuthError } = useContext(AuthContext);
   const fetchAndSetUser = useCallback(async () => {
-    const u = (await getUser()).user ?? (await anonSignIn()).user;
-    setUser(u);
-  }, [setUser]);
+    try {
+      const u = (await getUser()).user ?? (await anonSignIn()).user;
+      setUser(u);
+    } catch (e) {
+      setAuthError(e as Error);
+    }
+  }, [setUser, setAuthError]);
 
-  if (user === undefined) throw fetchAndSetUser();
+  if (authError === undefined && user === undefined) throw fetchAndSetUser();
 
   useEffect(() => {
     return onStateChanged({
