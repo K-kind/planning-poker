@@ -1,5 +1,7 @@
 # Simple Planning Poker
 
+<img src="public/images/demo.gif" alt="demo.gif" width="600" />
+
 ## Development Dependencies
 
 - Node.js v18
