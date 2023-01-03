@@ -4,7 +4,6 @@
 
 import { serve } from "https://deno.land/std@0.131.0/http/server.ts";
 import { supabaseAdminClient } from "../_shared/supabaseAdmin.ts";
-import { Database } from "../../../generated-schema.ts";
 import { handleWithCors, jsonResponse } from "../_shared/handleWithCors.ts";
 import { getUser } from "../_shared/auth.ts";
 import {
@@ -13,7 +12,6 @@ import {
 } from "../_shared/environment-variables.ts";
 
 type Params = { content: string };
-type RequestRow = Database["public"]["Tables"]["requests"]["Row"];
 
 const SLACK_POST_URL = "https://slack.com/api/chat.postMessage";
 
@@ -27,21 +25,19 @@ serve(
       }
 
       const user = await getUser(req);
+      const request = {
+        user_id: user ? user.id : null,
+        content: params.content,
+      };
 
-      const { data, error } = await supabaseAdminClient
+      const { error } = await supabaseAdminClient
         .from("requests")
-        .insert({
-          user_id: user ? user.id : null,
-          content: params.content,
-        })
-        .select();
+        .insert(request);
       if (error) throw error;
 
-      const insertedRow = data[0];
+      await notifyToSlack(request).catch((e) => console.error(e));
 
-      await notifyToSlack(insertedRow).catch((e) => console.error(e));
-
-      return jsonResponse({ body: { data: insertedRow }, status: 200 });
+      return jsonResponse({ body: { data: null }, status: 200 });
     } catch (error) {
       console.error(error);
       return jsonResponse({ body: { error: error.message }, status: 400 });
@@ -49,7 +45,10 @@ serve(
   })
 );
 
-const notifyToSlack = async (request: RequestRow) => {
+const notifyToSlack = async (request: {
+  user_id: string | null;
+  content: string;
+}) => {
   const text = `ユーザーからご意見が届きました。
 ユーザーID: ${String(request.user_id)}
 内容:

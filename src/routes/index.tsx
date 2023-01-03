@@ -7,6 +7,7 @@ import { MainLayout } from "@/shared/components/MainLayout";
 import { SetAuth } from "@/shared/components/SetAuth";
 import { PageLoader } from "@/shared/components/PageLoader";
 import { TermsPage } from "@/features/static/routes/TermsPage";
+import { NewRequestPage } from "@/features/requests/routes/NewRequestPage";
 
 const AppWithLayout = () => {
   return (
@@ -27,6 +28,7 @@ export const AppRoutes = () => {
         <Route index element={<TopPage />} />
         <Route path="/rooms/:id" element={<RoomPage />} />
         <Route path="/terms" element={<TermsPage />} />
+        <Route path="/requests/new" element={<NewRequestPage />} />
         <Route path="/*" element={<NotFound />} />
       </Route>
     </Routes>
