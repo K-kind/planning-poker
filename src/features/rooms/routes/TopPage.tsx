@@ -5,7 +5,7 @@ import { NewRoomForm } from "@/features/rooms/components/NewRoomForm";
 import { Room } from "@/features/rooms/types/room";
 import { RoomHistories } from "@/features/rooms/components/RoomHistories";
 
-export const NewRoom = () => {
+export const TopRoom = () => {
   const navigate = useNavigate();
 
   const onCreateRoom = async (room: Room) => {
