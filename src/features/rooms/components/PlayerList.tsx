@@ -42,6 +42,12 @@ export const PlayerList = ({ room, me }: Props) => {
     notifySuccess({ message: "変更を保存しました。" });
   };
 
+  const getNameColor = (player: Player) => {
+    if (!isActive(player)) return "dark.0";
+    if (player.id === me.id) return "blue";
+    return undefined;
+  };
+
   return (
     <List spacing="xs" withPadding>
       {room.players.map((player) => (
@@ -57,10 +63,8 @@ export const PlayerList = ({ room, me }: Props) => {
                 <Text
                   onMouseEnter={() => setPoptargetPlayerId(player.id)}
                   onMouseLeave={() => setPoptargetPlayerId(undefined)}
-                  sx={(theme) => ({
-                    flexGrow: 1,
-                    color: isActive(player) ? undefined : theme.colors.dark[0],
-                  })}
+                  c={getNameColor(player)}
+                  sx={{ flexGrow: 1 }}
                 >
                   {player.name}
                 </Text>
