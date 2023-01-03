@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Container, Flex, Header, Title, useMantineTheme } from "@mantine/core";
+import { APP_NAME } from "@/shared/constants";
 
 export const AppHeader = () => {
   const theme = useMantineTheme();
@@ -10,7 +11,7 @@ export const AppHeader = () => {
         <Flex align="center" h={55}>
           <Link to="/" style={{ textDecoration: "none" }}>
             <Title size="h3" c={theme.primaryColor}>
-              Simple Planning Poker
+              {APP_NAME}
             </Title>
           </Link>
         </Flex>

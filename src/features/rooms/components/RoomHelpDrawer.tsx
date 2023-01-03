@@ -1,5 +1,6 @@
 import { Box, Drawer, List } from "@mantine/core";
 import { ItemWithTitle } from "@/shared/components/ItemWithTitle";
+import { APP_NAME } from "@/shared/constants";
 
 type Props = {
   opened: boolean;
@@ -21,7 +22,7 @@ export const RoomHelpDrawer = ({ opened, closeDrawer }: Props) => {
       })}
     >
       <Box pt="lg">
-        <ItemWithTitle title="Simple Planning Pokerとは">
+        <ItemWithTitle title={`${APP_NAME}とは`}>
           <p>
             アジャイル開発における見積もり手法の1つである「プランニングポーカー」を、オンラインで行うためのアプリです。どなたでも無料でお使いいただけます。
           </p>

@@ -1,7 +1,8 @@
-import { ItemWithTitle } from "@/shared/components/ItemWithTitle";
 import { Affix, Box, Button, List, Transition } from "@mantine/core";
 import { useWindowScroll } from "@mantine/hooks";
 import { IconArrowUp } from "@tabler/icons";
+import { ItemWithTitle } from "@/shared/components/ItemWithTitle";
+import { APP_NAME } from "@/shared/constants";
 
 export const TermsPage = () => {
   const [scroll] = useWindowScroll();
@@ -39,8 +40,8 @@ export const TermsPage = () => {
           <br />
           (4) 「ユーザー」とは、本サービスを利用する個人または法人を意味します。
           <br />
-          (5) 「本サービス」とは、当方が提供する【Simple Planning
-          Poker】という名称のサービス（理由の如何を問わずサービスの名称または内容が変更された場合は、当該変更後のサービスを含みます。）を意味します。
+          (5) 「本サービス」とは、当方が提供する【{APP_NAME}
+          】という名称のサービス（理由の如何を問わずサービスの名称または内容が変更された場合は、当該変更後のサービスを含みます。）を意味します。
         </Box>
       </ItemWithTitle>
 
