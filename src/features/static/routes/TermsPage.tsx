@@ -1,5 +1,5 @@
 import { ItemWithTitle } from "@/shared/components/ItemWithTitle";
-import { Affix, Box, Button, Transition } from "@mantine/core";
+import { Affix, Box, Button, List, Transition } from "@mantine/core";
 import { useWindowScroll } from "@mantine/hooks";
 import { IconArrowUp } from "@tabler/icons";
 
@@ -141,28 +141,28 @@ export const TermsPage = () => {
       </ItemWithTitle>
 
       <ItemWithTitle title="第6条（本サービスの内容の変更、終了）">
-        <ol>
-          <li>
+        <List type="ordered">
+          <List.Item>
             当方は、当方の都合により、本サービスの内容を変更し、または提供を終了することができます。
-          </li>
-          <li>
+          </List.Item>
+          <List.Item>
             当方が本サービスの提供を終了する場合、当方はユーザーに事前に通知するものとします。
-          </li>
-        </ol>
+          </List.Item>
+        </List>
       </ItemWithTitle>
 
       <ItemWithTitle title="第7条（保証の否認及び免責）">
-        <ol>
-          <li>
+        <List type="ordered">
+          <List.Item>
             当方は、本サービスがユーザーの特定の目的に適合すること、期待する機能・商品的価値・正確性・有用性を有すること、ユーザーによる本サービスの利用がユーザーに適用のある法令または業界団体の内部規則等に適合すること、継続的に利用できること、及び不具合が生じないことについて、明示又は黙示を問わず何ら保証するものではありません。
-          </li>
-          <li>
+          </List.Item>
+          <List.Item>
             当方は、本サービスに関してユーザーが被った損害につき、過去【12ヶ月】間にユーザーが当方に支払った対価の金額を超えて賠償する責任を負わないものとし、また、付随的損害、間接損害、特別損害、将来の損害及び逸失利益にかかる損害については、賠償する責任を負わないものとします。
-          </li>
-          <li>
+          </List.Item>
+          <List.Item>
             本サービスまたは当ウェブサイトに関連してユーザーと他のユーザーまたは第三者との間において生じた取引、連絡、紛争等については、ユーザーが自己の責任によって解決するものとします。
-          </li>
-        </ol>
+          </List.Item>
+        </List>
       </ItemWithTitle>
 
       <ItemWithTitle title="第8条（秘密保持）">
@@ -178,25 +178,25 @@ export const TermsPage = () => {
       </ItemWithTitle>
 
       <ItemWithTitle title="第10条（連絡／通知）">
-        <ol>
-          <li>
+        <List type="ordered">
+          <List.Item>
             本サービスに関する問い合わせその他ユーザーから当方に対する連絡または通知、及び本規約の変更に関する通知その他当方からユーザーに対する連絡または通知は、当方の定める方法で行うものとします。
-          </li>
-          <li>
+          </List.Item>
+          <List.Item>
             当方が登録事項に含まれるメールアドレスその他の連絡先に連絡または通知を行った場合、ユーザーは当該連絡または通知を受領したものとみなします。
-          </li>
-        </ol>
+          </List.Item>
+        </List>
       </ItemWithTitle>
 
       <ItemWithTitle title="第11条（サービス利用契約上の地位の譲渡等）">
-        <ol>
-          <li>
+        <List type="ordered">
+          <List.Item>
             ユーザーは、当方の書面による事前の承諾なく、利用契約上の地位または本規約に基づく権利もしくは義務につき、第三者に対し、譲渡、移転、担保設定、その他の処分をすることはできません。
-          </li>
-          <li>
+          </List.Item>
+          <List.Item>
             当方は本サービスにかかる事業を他社に譲渡した場合には、当該事業譲渡に伴い利用契約上の地位、本規約に基づく権利及び義務並びにユーザーの登録事項その他の顧客情報を当該事業譲渡の譲受人に譲渡することができるものとし、ユーザーは、かかる譲渡につき本項において予め同意したものとします。なお、本項に定める事業譲渡には、通常の事業譲渡のみならず、会社分割その他事業が移転するあらゆる場合を含むものとします。
-          </li>
-        </ol>
+          </List.Item>
+        </List>
       </ItemWithTitle>
 
       <ItemWithTitle title="第12条（分離可能性）">
@@ -206,12 +206,14 @@ export const TermsPage = () => {
       </ItemWithTitle>
 
       <ItemWithTitle title="第13条（準拠法及び管轄裁判所）">
-        <ol>
-          <li>本規約及びサービス利用契約の準拠法は日本法とします。</li>
-          <li>
+        <List type="ordered">
+          <List.Item>
+            本規約及びサービス利用契約の準拠法は日本法とします。
+          </List.Item>
+          <List.Item>
             本規約またはサービス利用契約に起因し、または関連する一切の紛争については、東京地方裁判所を第一審の専属的合意管轄裁判所とします。
-          </li>
-        </ol>
+          </List.Item>
+        </List>
       </ItemWithTitle>
 
       <ItemWithTitle>【2023年01月02日制定】</ItemWithTitle>
