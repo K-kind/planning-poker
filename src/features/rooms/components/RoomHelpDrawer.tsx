@@ -21,6 +21,12 @@ export const RoomHelpDrawer = ({ opened, closeDrawer }: Props) => {
       })}
     >
       <Box pt="lg">
+        <ItemWithTitle title="Simple Planning Pokerとは">
+          <p>
+            アジャイル開発における見積もり手法の1つである「プランニングポーカー」を、オンラインで行うためのアプリです。どなたでも無料でお使いいただけます。
+          </p>
+        </ItemWithTitle>
+
         <ItemWithTitle title="はじめに">
           <p>このページのURLを共有し、プレイヤーを招待してください。</p>
         </ItemWithTitle>
