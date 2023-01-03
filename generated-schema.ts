@@ -9,6 +9,26 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      requests: {
+        Row: {
+          id: number
+          user_id: string | null
+          content: string
+          created_at: string
+        }
+        Insert: {
+          id?: number
+          user_id?: string | null
+          content: string
+          created_at?: string
+        }
+        Update: {
+          id?: number
+          user_id?: string | null
+          content?: string
+          created_at?: string
+        }
+      }
       room_users: {
         Row: {
           id: number
