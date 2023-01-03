@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRoom } from "@/features/rooms/api/getRoom";
 import { useSubscribeRoom } from "@/features/rooms/api/subscribeRoom";
-import { NewPlayerForm } from "@/features/rooms/components/NewPlayerForm";
+import { NewPlayerBoard } from "@/features/rooms/components/NewPlayerBoard";
 import { RoomBoard } from "@/features/rooms/components/RoomBoard";
 import { AuthContext } from "@/providers/auth";
 
@@ -29,7 +29,7 @@ export const RoomPage = () => {
   });
 
   if (player === undefined) {
-    return <NewPlayerForm room={room} />;
+    return <NewPlayerBoard room={room} />;
   }
 
   return <RoomBoard room={room} player={player} />;

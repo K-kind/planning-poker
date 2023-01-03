@@ -12,7 +12,7 @@ type Props = {
 
 type FormValues = { name: string };
 
-export const NewPlayerForm = ({ room }: Props) => {
+export const NewPlayerBoard = ({ room }: Props) => {
   const { user } = useContext(AuthContext);
   const form = useForm<FormValues>({
     initialValues: { name: "" },
