@@ -223,7 +223,7 @@ export const TermsPage = () => {
         <Transition transition="slide-up" mounted={scroll.y > 500}>
           {(transitionStyles) => (
             <Button
-              variant="outline"
+              variant="light"
               leftIcon={<IconArrowUp size={16} />}
               style={transitionStyles}
               onClick={() => window.scrollTo({ top: 0 })}

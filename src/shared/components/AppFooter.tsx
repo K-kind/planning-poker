@@ -6,19 +6,21 @@ export const AppFooter = () => {
     <Footer height={60} py="lg">
       <Container>
         <Flex align="center" gap="xl">
-          <Link to="/requests/new" style={{ textDecoration: "none" }}>
-            <Text size="sm" c="dark.3">
-              ご意見箱
-            </Text>
-          </Link>
-
-          <Link to="/terms" style={{ textDecoration: "none" }}>
-            <Text size="sm" c="dark.3">
-              利用規約
-            </Text>
-          </Link>
+          <LinkItem to="/about" label="このアプリについて" />
+          <LinkItem to="/requests/new" label="ご意見箱" />
+          <LinkItem to="/terms" label="利用規約" />
         </Flex>
       </Container>
     </Footer>
+  );
+};
+
+const LinkItem = ({ to, label }: { to: string; label: string }) => {
+  return (
+    <Link to={to} style={{ textDecoration: "none" }}>
+      <Text size="sm" c="dark.3">
+        {label}
+      </Text>
+    </Link>
   );
 };
