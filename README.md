@@ -4,6 +4,15 @@
 
 - Node.js v18
 
+## Environment Variables
+
+Create a `.env.local` file in the project root and set the following values.
+
+```
+REACT_APP_SUPABASE_URL=<Your Supabase Project URL>
+REACT_APP_SUPABASE_ANON_KEY=<Your Supabase anon API key>
+```
+
 ## Available Scripts
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
