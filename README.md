@@ -62,3 +62,7 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ### deploy a function
 
 `npx supabase functions deploy <function name>`
+
+### set environment variables for functions
+
+`npx supabase secrets set NAME1=VALUE1 NAME2=VALUE2`
