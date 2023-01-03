@@ -49,6 +49,7 @@ export const NewRoomForm = ({ onSubmit }: Props) => {
               createRoomMutation.isLoading || anonSignUpMutation.isLoading
             }
             loaderPosition="center"
+            w="100%"
           >
             部屋を作成する
           </Button>

@@ -12,6 +12,7 @@ import { useUpdateRoom } from "@/features/rooms/api/updateRoom";
 import { RoomHeader } from "@/features/rooms/components/RoomHeader";
 import { RoomSettingsDrawer } from "@/features/rooms/components/RoomSettingsDrawer";
 import { isActive } from "@/features/rooms/models/player";
+import { RoomHelpDrawer } from "@/features/rooms/components/RoomHelpDrawer";
 
 type Props = {
   room: Room;
@@ -19,7 +20,8 @@ type Props = {
 };
 
 export const RoomBoard = ({ room, player }: Props) => {
-  const [drawerOpened, setDrawerOpened] = useState(false);
+  const [settingsOpened, setSettingsOpened] = useState(false);
+  const [helpOpened, setHelpOpened] = useState(false);
 
   const updateRoomMuation = useUpdateRoom({ id: room.id });
   const toggleStatus = useCallback(
@@ -73,15 +75,21 @@ export const RoomBoard = ({ room, player }: Props) => {
     <Flex direction="column" align="center" pt={{ base: "xl" }}>
       <RoomHeader
         room={room}
-        openDrawer={() => setDrawerOpened(true)}
+        openSettings={() => setSettingsOpened(true)}
+        openHelp={() => setHelpOpened(true)}
         sx={{ marginBottom: 40, width: "100%" }}
+      />
+
+      <RoomHelpDrawer
+        opened={helpOpened}
+        closeDrawer={() => setHelpOpened(false)}
       />
 
       <RoomSettingsDrawer
         room={room}
-        opened={drawerOpened}
+        opened={settingsOpened}
         player={player}
-        closeDrawer={() => setDrawerOpened(false)}
+        closeDrawer={() => setSettingsOpened(false)}
       />
 
       <RoomButtons

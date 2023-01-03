@@ -65,7 +65,10 @@ export const RoomSettingsDrawer = ({
       title="ルーム設定"
       padding="xl"
       size="xl"
-      styles={() => ({ drawer: { overflowY: "auto" } })}
+      styles={() => ({
+        drawer: { overflowY: "auto" },
+        title: { fontWeight: "bold" },
+      })}
     >
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <TextInput

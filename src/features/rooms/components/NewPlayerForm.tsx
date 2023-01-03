@@ -39,6 +39,7 @@ export const NewPlayerForm = ({ room }: Props) => {
             type="submit"
             loading={createPlayerMutation.isLoading}
             loaderPosition="center"
+            w="100%"
           >
             {room.name} に入室
           </Button>
