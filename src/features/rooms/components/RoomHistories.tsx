@@ -1,9 +1,10 @@
 import { useContext, useMemo } from "react";
 import { Link } from "react-router-dom";
-import { Box, Table, Text } from "@mantine/core";
+import { Box, Button, Flex, Table, Text } from "@mantine/core";
 import { useRooms } from "@/features/rooms/api/getRooms";
 import { AuthContext } from "@/providers/auth";
 import { formatYMD } from "@/shared/utils/date";
+import { RoomHistoryClipButton } from "@/features/rooms/components/RoomHistoryClipButton";
 
 export const RoomHistories = () => {
   const { user } = useContext(AuthContext);
@@ -34,15 +35,21 @@ export const RoomHistories = () => {
         {rooms.map((room) => (
           <tr key={room.id}>
             <td>
-              <Box
-                component={Link}
-                to={room.path}
-                sx={{ display: "block", width: "100%", height: "100%" }}
-              >
-                {room.name}
-              </Box>
+              <Flex align="center">
+                <Box
+                  component={Link}
+                  to={room.path}
+                  sx={{ display: "block", width: "100%", height: "100%" }}
+                  c="blue"
+                >
+                  {room.name}
+                </Box>
+                <Box mr={{ lg: "lg" }}>
+                  <RoomHistoryClipButton path={room.path} />
+                </Box>
+              </Flex>
             </td>
-            <td>{room.createdAt}</td>
+            <td width="30%">{room.createdAt}</td>
           </tr>
         ))}
       </tbody>
