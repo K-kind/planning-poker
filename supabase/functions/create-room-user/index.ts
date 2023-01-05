@@ -25,7 +25,7 @@ serve(
         return jsonResponse({ body: { message }, status: 422 });
       }
 
-      const data = await fetchOrCreateRoomUser(roomId, user.id);
+      const data = await createRoomUser(roomId, user.id);
       return jsonResponse({ body: { data }, status: 200 });
     } catch (error) {
       console.error(error);
@@ -33,24 +33,6 @@ serve(
     }
   })
 );
-
-const fetchOrCreateRoomUser = async (roomId: string, userId: string) => {
-  return (
-    (await fetchRoomUser(roomId, userId)) ??
-    (await createRoomUser(roomId, userId))
-  );
-};
-
-const fetchRoomUser = async (roomId: string, userId: string) => {
-  const { data, error } = await supabaseAdminClient
-    .from("room_users")
-    .select("*")
-    .eq("room_id", roomId)
-    .eq("user_id", userId);
-  if (error) throw error;
-
-  return data[0]; // Could be undefined
-};
 
 const createRoomUser = async (roomId: string, userId: string) => {
   const { data, error } = await supabaseAdminClient

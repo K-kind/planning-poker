@@ -1,3 +1,4 @@
+import { parseRoomUser } from "@/features/roomUsers/models/roomUser";
 import { supabase } from "@/lib/supabase";
 import { CreateRoomUser, FUNCTION_NAME } from "@/shared/types/functions";
 
@@ -5,7 +6,6 @@ export type CreateRoomUserDTO = {
   params: { roomId: string };
 };
 
-/** create or load RoomUser */
 export const createRoomUser = async ({ params }: CreateRoomUserDTO) => {
   const body: CreateRoomUser["requestBody"] = { room_id: params.roomId };
   const { data, error } = await supabase.functions.invoke<
@@ -16,5 +16,5 @@ export const createRoomUser = async ({ params }: CreateRoomUserDTO) => {
   const roomUser = data?.data;
   if (roomUser === undefined) throw new Error("Error creating a roomUser");
 
-  return roomUser;
+  return parseRoomUser(roomUser);
 };
