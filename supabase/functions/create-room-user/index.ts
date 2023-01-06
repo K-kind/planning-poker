@@ -26,6 +26,7 @@ serve(
       }
 
       const data = await createRoomUser(roomId, user.id);
+
       return jsonResponse({ body: { data }, status: 200 });
     } catch (error) {
       console.error(error);

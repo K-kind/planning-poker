@@ -25,21 +25,27 @@ serve(
         return jsonResponse({ body: { message }, status: 422 });
       }
 
-      const { data, error } = await supabaseAdminClient
-        .from("rooms")
-        .insert({
-          name: params.name ?? "Room",
-          card_status: params.card_status,
-          cards: params.cards,
-          players: params.players,
-        })
-        .select();
-      if (error) throw error;
+      const data = await createRoom(params);
 
-      return jsonResponse({ body: { data: data[0] }, status: 200 });
+      return jsonResponse({ body: { data }, status: 200 });
     } catch (error) {
       console.error(error);
       return jsonResponse({ body: { error: error.message }, status: 400 });
     }
   })
 );
+
+const createRoom = async (params: Params) => {
+  const { data, error } = await supabaseAdminClient
+    .from("rooms")
+    .insert({
+      name: params.name ?? "Room",
+      card_status: params.card_status,
+      cards: params.cards,
+      players: params.players,
+    })
+    .select();
+  if (error) throw error;
+
+  return data[0];
+};
