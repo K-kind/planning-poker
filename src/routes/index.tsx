@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Outlet, Route } from "react-router-dom";
 import { TopPage } from "@/features/rooms/routes/TopPage";
 import { RoomPage } from "@/features/rooms/routes/RoomPage";
 import { NotFound } from "@/routes/NotFound";
@@ -9,6 +9,7 @@ import { PageLoader } from "@/shared/components/PageLoader";
 import { TermsPage } from "@/features/static/routes/TermsPage";
 import { NewRequestPage } from "@/features/requests/routes/NewRequestPage";
 import { AboutPage } from "@/features/static/routes/AboutPage";
+import { SentryRoutes } from "@/lib/sentry";
 
 const AppWithLayout = () => {
   return (
@@ -24,7 +25,7 @@ const AppWithLayout = () => {
 
 export const AppRoutes = () => {
   return (
-    <Routes>
+    <SentryRoutes>
       <Route path="/" element={<AppWithLayout />}>
         <Route index element={<TopPage />} />
         <Route path="/rooms/:id" element={<RoomPage />} />
@@ -33,6 +34,6 @@ export const AppRoutes = () => {
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/*" element={<NotFound />} />
       </Route>
-    </Routes>
+    </SentryRoutes>
   );
 };
