@@ -86,7 +86,6 @@ const WithPopover = ({ room, player }: { room: Room; player: Player }) => {
               size="xs"
               ml="xs"
               loading={updatePlayerMutation.isLoading}
-              loaderPosition="center"
             >
               保存
             </Button>

@@ -52,7 +52,6 @@ export const NewPlayerBoard = ({ room }: Props) => {
           <Button
             type="submit"
             loading={createPlayerMutation.isLoading}
-            loaderPosition="center"
             w="100%"
           >
             {room.name} に入室

@@ -61,7 +61,6 @@ export const NewRequestPage = () => {
           <Button
             type="submit"
             loading={createRequestMutation.isLoading}
-            loaderPosition="center"
             w={200}
           >
             送信

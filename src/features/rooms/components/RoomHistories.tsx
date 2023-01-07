@@ -103,7 +103,6 @@ export const RoomHistories = () => {
                     variant="subtle"
                     onClick={() => handleDelete(room)}
                     loading={deleteRoomMutation.isLoading}
-                    loaderPosition="center"
                   >
                     <IconTrash />
                   </Button>
