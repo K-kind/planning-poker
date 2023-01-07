@@ -6,7 +6,9 @@ import { serve } from "https://deno.land/std@0.131.0/http/server.ts";
 import { supabaseAdminClient } from "../_shared/supabaseAdmin.ts";
 import { handleWithCors, jsonResponse } from "../_shared/handleWithCors.ts";
 import { getUser } from "../_shared/auth.ts";
+import { Database } from "../../../generated-schema.ts";
 
+type RoomUserRow = Database["public"]["Tables"]["room_users"]["Row"];
 type Params = { room_id: string };
 
 serve(
@@ -25,7 +27,7 @@ serve(
         return jsonResponse({ body: { message }, status: 422 });
       }
 
-      const data = await createRoomUser(roomId, user.id);
+      const data = await fetchOrCreateRoomUser(roomId, user.id);
 
       return jsonResponse({ body: { data }, status: 200 });
     } catch (error) {
@@ -34,6 +36,27 @@ serve(
     }
   })
 );
+
+const fetchOrCreateRoomUser = async (roomId: string, userId: string) => {
+  return (
+    (await fetchRoomUser(roomId, userId)) ??
+    (await createRoomUser(roomId, userId))
+  );
+};
+
+const fetchRoomUser = async (
+  roomId: string,
+  userId: string
+): Promise<RoomUserRow | undefined> => {
+  const { data, error } = await supabaseAdminClient
+    .from("room_users")
+    .select("*")
+    .eq("room_id", roomId)
+    .eq("user_id", userId);
+  if (error) throw error;
+
+  return data[0];
+};
 
 const createRoomUser = async (roomId: string, userId: string) => {
   const { data, error } = await supabaseAdminClient
