@@ -36,7 +36,13 @@ export const NewRequestPage = () => {
 
       <Box component="p" fz="sm">
         {APP_NAME}
-        に関するご意見、ご要望などがありましたら、お気軽にお寄せください。（送信内容は開発者にのみ届きます。）
+        に関するご意見、ご要望などがありましたら、お気軽にお寄せください。
+      </Box>
+      <Box component="p" fz="sm">
+        また、不具合等についてもこちらでご報告いただけますと幸いです。
+      </Box>
+      <Box component="p" fz="sm">
+        （送信内容は開発者にのみ届きます。）
       </Box>
 
       <form onSubmit={form.onSubmit(handleSubmit)}>
