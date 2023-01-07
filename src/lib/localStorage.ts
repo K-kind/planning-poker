@@ -1,3 +1,5 @@
+import { captureException } from "@/lib/sentry";
+
 const STORAGE_KEYS = {
   AUTH: "planning-poker:auth@v1",
 } as const;
@@ -17,7 +19,7 @@ function getStorageItem(key: StorageKey): StorageValue | null {
   try {
     return JSON.parse(stringifiedItem) as StorageValue;
   } catch (e) {
-    console.error(e);
+    captureException(e);
 
     return null;
   }

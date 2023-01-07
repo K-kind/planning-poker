@@ -1,6 +1,7 @@
 import { useCallback, useContext } from "react";
 import { anonSignUp } from "@/features/auth/api/anonSignUp";
 import { AuthContext } from "@/providers/auth";
+import { captureException } from "@/lib/sentry";
 
 /** Ensure that the user is signed in. */
 export const useEnsureSignIn = () => {
@@ -14,6 +15,7 @@ export const useEnsureSignIn = () => {
       const u = (await anonSignUp()).user;
       setUser(u);
     } catch (e) {
+      captureException(e);
       setAuthError(e as Error);
     }
   }, [user, setUser, setAuthError]);

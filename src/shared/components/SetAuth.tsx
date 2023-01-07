@@ -3,6 +3,7 @@ import { getUser } from "@/features/auth/api/getUser";
 import { anonSignIn } from "@/features/auth/api/anonSignIn";
 import { onStateChanged } from "@/features/auth/api/onStateChanged";
 import { AuthContext } from "@/providers/auth";
+import { captureException } from "@/lib/sentry";
 
 type Props = {
   children: ReactNode;
@@ -19,6 +20,7 @@ export const SetAuth = ({ children }: Props) => {
       const u = (await getUser()).user ?? (await anonSignIn()).user;
       setUser(u);
     } catch (e) {
+      captureException(e);
       setAuthError(e as Error);
     }
   }, [setUser, setAuthError]);
