@@ -1,5 +1,5 @@
 import { useContext, useMemo } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRoom } from "@/features/rooms/api/getRoom";
 import { useSubscribeRoom } from "@/features/rooms/api/subscribeRoom";
@@ -22,6 +22,7 @@ export const RoomPage = () => {
   const player = players.find((p) => p.id === user!.id);
 
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   useSubscribeRoom({
     id: roomId,
@@ -29,7 +30,13 @@ export const RoomPage = () => {
       () => (room) => queryClient.setQueryData(["room", room.id], () => room),
       [queryClient]
     ),
-    onDelete: useMemo(() => () => alert("部屋が削除されました。"), []),
+    onDelete: useMemo(
+      () => () => {
+        alert("部屋が削除されました。");
+        navigate("/");
+      },
+      [navigate]
+    ),
   });
 
   if (player === undefined) {

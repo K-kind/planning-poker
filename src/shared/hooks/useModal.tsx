@@ -1,3 +1,4 @@
+import { Text } from "@mantine/core";
 import { openConfirmModal } from "@mantine/modals";
 import { OpenConfirmModal } from "@mantine/modals/lib/context";
 
@@ -10,7 +11,7 @@ export const useModal = () => {
   const confirm = ({ message, options = {} }: Options) => {
     return new Promise<boolean>((resolve) => {
       openConfirmModal({
-        children: message,
+        children: <Text sx={{ whiteSpace: "pre-line" }}>{message}</Text>,
         title: "確認",
         confirmProps: { w: 105 },
         labels: { confirm: "OK", cancel: "キャンセル" },
