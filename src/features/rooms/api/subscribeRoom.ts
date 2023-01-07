@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { parseRoom } from "@/features/rooms/models/room";
 import { Room, RoomRow } from "@/features/rooms/types/room";
+import { captureException } from "@/lib/sentry";
 
 type UseSubscribeRoomOptions = {
   id: string;
@@ -53,9 +54,7 @@ export const useSubscribeRoom = ({
         }
 
         if (status === "CHANNEL_ERROR") {
-          console.error(
-            `There was an error subscribing to channel: ${err?.message}`
-          );
+          captureException(err);
           onError?.(err);
         }
 

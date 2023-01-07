@@ -39,6 +39,5 @@ export const initSentry = () => {
 export const SentryRoutes = Sentry.withSentryReactRouterV6Routing(Routes);
 
 export const captureException = (e: unknown) => {
-  console.error(e);
   Sentry.captureException(e);
 };

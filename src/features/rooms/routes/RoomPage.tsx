@@ -37,6 +37,13 @@ export const RoomPage = () => {
       },
       [navigate]
     ),
+    onError: useMemo(
+      () => () => {
+        alert("エラーが発生しました。");
+        navigate(0);
+      },
+      [navigate]
+    ),
   });
 
   if (player === undefined) {

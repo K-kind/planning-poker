@@ -7,6 +7,7 @@ import { useUpdateRoom } from "@/features/rooms/api/updateRoom";
 import { useNotification } from "@/shared/hooks/useNotification";
 import { Player } from "@/features/rooms/types/player";
 import { PlayerList } from "@/features/rooms/components/PlayerList";
+import { captureException } from "@/lib/sentry";
 
 type FormValues = { name: string; cards: string };
 
@@ -23,7 +24,7 @@ export const RoomSettingsDrawer = ({
   player: me,
   closeDrawer,
 }: Props) => {
-  const { notifySuccess } = useNotification();
+  const { notifySuccess, notifyError } = useNotification();
   const form = useForm<FormValues>({
     initialValues: { name: "", cards: "" },
     validate: zodResolver(roomFormSchema().pick({ name: true, cards: true })),
@@ -50,7 +51,8 @@ export const RoomSettingsDrawer = ({
         cards: cards.split(",").map(Number),
       });
     } catch (e) {
-      console.error(e);
+      captureException(e);
+      notifyError();
       return;
     }
 

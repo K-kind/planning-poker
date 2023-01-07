@@ -11,6 +11,7 @@ import { useDeleteRoom } from "@/features/rooms/api/deleteRoom";
 import { useNotification } from "@/shared/hooks/useNotification";
 import { Player } from "@/features/rooms/types/player";
 import { useModal } from "@/shared/hooks/useModal";
+import { captureException } from "@/lib/sentry";
 
 type RoomItem = {
   id: string;
@@ -26,7 +27,7 @@ export const RoomHistories = () => {
 
   const queryClient = useQueryClient();
   const { confirm } = useModal();
-  const { notifySuccess } = useNotification();
+  const { notifySuccess, notifyError } = useNotification();
 
   const deleteRoomMutation = useDeleteRoom();
 
@@ -41,7 +42,8 @@ export const RoomHistories = () => {
       queryClient.invalidateQueries({ queryKey: ["rooms"] });
       notifySuccess({ message: "部屋を削除しました。" });
     } catch (e) {
-      console.error(e);
+      captureException(e);
+      notifyError();
     }
   };
 

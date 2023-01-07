@@ -6,6 +6,8 @@ import { Room } from "@/features/rooms/types/room";
 import { useAnonSignUp } from "@/features/auth/api/anonSignUp";
 import { AuthContext } from "@/providers/auth";
 import { roomFormSchema } from "@/features/rooms/schemas/roomForm";
+import { captureException } from "@/lib/sentry";
+import { useNotification } from "@/shared/hooks/useNotification";
 
 type Props = {
   onSubmit: (room: Room) => void;
@@ -19,6 +21,7 @@ export const NewRoomForm = ({ onSubmit }: Props) => {
     initialValues: { name: "" },
     validate: zodResolver(roomFormSchema().pick({ name: true })),
   });
+  const { notifyError } = useNotification();
 
   const createRoomMutation = useCreateRoom();
   const anonSignUpMutation = useAnonSignUp();
@@ -29,7 +32,8 @@ export const NewRoomForm = ({ onSubmit }: Props) => {
       const room = await createRoomMutation.mutateAsync({ name });
       onSubmit(room);
     } catch (e) {
-      console.error(e);
+      captureException(e);
+      notifyError();
     }
   };
 

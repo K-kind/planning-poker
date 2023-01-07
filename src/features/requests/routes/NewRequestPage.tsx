@@ -4,11 +4,12 @@ import { APP_NAME } from "@/shared/constants";
 import { requestFormSchema } from "@/features/requests/schemas/requestForm";
 import { useCreateRequest } from "@/features/requests/api/createRequest";
 import { useNotification } from "@/shared/hooks/useNotification";
+import { captureException } from "@/lib/sentry";
 
 type FormValues = { content: string };
 
 export const NewRequestPage = () => {
-  const { notifySuccess } = useNotification();
+  const { notifySuccess, notifyError } = useNotification();
 
   const form = useForm<FormValues>({
     initialValues: { content: "" },
@@ -24,7 +25,8 @@ export const NewRequestPage = () => {
         message: "送信に成功しました。ご意見ありがとうございます。",
       });
     } catch (e) {
-      console.error(e);
+      captureException(e);
+      notifyError();
     }
   };
 

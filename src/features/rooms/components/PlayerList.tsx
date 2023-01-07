@@ -9,6 +9,7 @@ import { Player } from "@/features/rooms/types/player";
 import { useDeletePlayer } from "@/features/rooms/api/deletePlayer";
 import { isActive } from "@/features/rooms/models/player";
 import { formatYMDMH } from "@/shared/utils/date";
+import { captureException } from "@/lib/sentry";
 
 type Props = {
   room: Room;
@@ -16,7 +17,7 @@ type Props = {
 };
 
 export const PlayerList = ({ room, me }: Props) => {
-  const { notifySuccess } = useNotification();
+  const { notifySuccess, notifyError } = useNotification();
   const { confirm } = useModal();
   const deletePlayerMutation = useDeletePlayer({ room });
 
@@ -35,7 +36,8 @@ export const PlayerList = ({ room, me }: Props) => {
     try {
       await deletePlayerMutation.mutateAsync({ id: player.id });
     } catch (e) {
-      console.error(e);
+      captureException(e);
+      notifyError();
       return;
     }
 

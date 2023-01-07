@@ -6,6 +6,7 @@ import { Room } from "@/features/rooms/types/room";
 import { useUpdatePlayer } from "@/features/rooms/api/updatePlayer";
 import { playerFormSchema } from "@/features/rooms/schemas/playerForm";
 import { useNotification } from "@/shared/hooks/useNotification";
+import { captureException } from "@/lib/sentry";
 
 type Props = {
   room: Room;
@@ -32,7 +33,7 @@ const NameText = ({ player, isMe }: { player: Player; isMe: boolean }) => {
 type FormValues = { name: string };
 
 const WithPopover = ({ room, player }: { room: Room; player: Player }) => {
-  const { notifySuccess } = useNotification();
+  const { notifySuccess, notifyError } = useNotification();
   const form = useForm<FormValues>({
     initialValues: { name: player.name },
     validate: zodResolver(playerFormSchema().pick({ name: true })),
@@ -54,7 +55,9 @@ const WithPopover = ({ room, player }: { room: Room; player: Player }) => {
     try {
       await updatePlayerMutation.mutate({ name });
     } catch (e) {
-      console.error(e);
+      captureException(e);
+      notifyError();
+      return;
     }
 
     notifySuccess({ message: "変更を保存しました。" });
