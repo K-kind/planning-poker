@@ -14,7 +14,8 @@ export const RoomPage = () => {
   useEnsureSignIn();
 
   const roomId = params.id!;
-  const roomQuery = useRoom({ id: roomId });
+  // disable caching to avoid updating players by old values on second visit
+  const roomQuery = useRoom({ id: roomId, config: { cacheTime: 0 } });
   const { user } = useContext(AuthContext);
 
   const room = roomQuery.data!;
@@ -39,7 +40,7 @@ export const RoomPage = () => {
     ),
     onError: useMemo(
       () => () => {
-        alert("エラーが発生しました。");
+        alert("通信が切断しました。");
         navigate(0);
       },
       [navigate]
