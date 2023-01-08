@@ -54,7 +54,7 @@ export const useSubscribeRoom = ({
         }
 
         if (status === "CHANNEL_ERROR") {
-          captureException(err);
+          err && captureException(err);
           onError?.(err);
         }
 
