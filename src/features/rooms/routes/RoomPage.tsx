@@ -39,9 +39,11 @@ export const RoomPage = () => {
       [navigate]
     ),
     onError: useMemo(
-      () => () => {
-        alert("通信が切断されました。");
-        navigate(0);
+      () => (e) => {
+        if (e !== undefined) {
+          alert("通信が切断されました。");
+          navigate(0);
+        }
       },
       [navigate]
     ),
